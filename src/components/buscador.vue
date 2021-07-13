@@ -1,5 +1,6 @@
 <template>
   <div class="buscador">
+    <input type="text">
   </div>
 </template>
 

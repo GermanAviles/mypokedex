@@ -60,6 +60,8 @@ export default {
         height: 249px;
       }
       img {
+        // object-fit: cover;
+        // object-position: center;
         @media screen and (max-width: 410px) {
           width: 100%;
           height: 100%;
