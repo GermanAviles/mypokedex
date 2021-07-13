@@ -7,6 +7,10 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300&display=swap');
 @import './assets/styles/variables/colors.css';
+body {
+  padding: 0;
+  margin: 0;
+}
 
 #app {
   font-family: 'Karla', Avenir, sans-serif, Helvetica, Arial;
@@ -14,6 +18,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: var(--background-app);
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
 }
 
 </style>

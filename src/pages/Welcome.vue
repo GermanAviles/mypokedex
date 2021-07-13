@@ -14,19 +14,21 @@
         </p>
       </div>
       <div class="welcome__message-action">
-        <button id="get-started" type="button"> Get started </button>
+        <button id="get-started" type="button" @click="goPokemons"> Get started </button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/welcome.vue'
-
 export default {
   name: 'Welcome',
   components: {
+  },
+  methods: {
+    goPokemons() {
+      this.$router.push('pokemons');
+    }
   }
 }
 </script>
@@ -39,10 +41,14 @@ export default {
   align-content: center;
   justify-content: center;
   flex-flow: column wrap;
+  width: 100%;
+  height: 100%;
 
   .welcome__image {
     display: flex;
     justify-content: center;
+    margin-bottom: 15px;
+
     .welcome__image-contenedor {
       border: 1px solid var(--black);
       border-radius: 50%;

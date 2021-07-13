@@ -1,24 +1,35 @@
 <template>
   <div class="pokemons">
-    <!-- <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <!-- Hola somos los pokemones -->
+    <div class="proando">
+      <pokeball-loading />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/welcome.vue'
+import pokeballLoading from '@/components/pokeball-loading.vue';
 
 export default {
   name: 'pokemons',
   components: {
+    'pokeball-loading': pokeballLoading
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  // color: #F22539; ==> Rojo primario
-  // #BFBFBF ==> gris
-  // #ECA539 ==> dorado
-  // #F5F5F5 ==> gris circulo
+
+.pokemons {
+  position: relative;
+  display: flex;
+}
+
+.proando {
+  width: 150px;
+  height: 150px;
+}
+
 </style>
