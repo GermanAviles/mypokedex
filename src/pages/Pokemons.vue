@@ -4,10 +4,11 @@
     <div v-if="cargando" id="pokemons__loading" class="pokemons__loading">
       <pokeball-loading />
     </div>
+
     <div v-show="!cargando" class="pokemons__contenedor">
       <!-- Buscador -->
       <div class="contenedor-buscador">
-        <buscador />
+        <buscador v-model="textoBusqued"/>
       </div>
       <!-- Sin resultados -->
       <div v-if="!listadoPokemons.lenght && textoBusqued" class="pokemons__no-data-found">
@@ -33,10 +34,21 @@ export default {
   },
 
   data: () => ({
+    timeHandler: null,
     cargando: true,
-    textoBusqued: 'asdasd',
+    textoBusqued: null,
     listadoPokemons: []
   }),
+
+  watch: {
+    textoBusqued() {
+      clearTimeout( this.timeHandler );
+      this.timeHandler = setTimeout(() => {
+        console.log('Ejecutar petición', this.textoBusqued);
+      }, 300);
+      // console.log('NYEIV: ', this.textoBusqued);
+    }
+  },
 
   mounted() {
     setTimeout( () => {
@@ -47,7 +59,8 @@ export default {
 
   methods: {
     limpiarBusqueda() {
-      console.log('EVENTO RECIBIDO');
+      // this.textoBusqued = null;
+      this.$router.back();
     }
   }
 }
@@ -73,6 +86,7 @@ export default {
   .pokemons__contenedor {
 
     .contenedor-buscador {
+      width: 570px;
       height: fit-content;
     }
 
