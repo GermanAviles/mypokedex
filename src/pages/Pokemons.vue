@@ -15,6 +15,9 @@
         <no-data-found @goback="limpiarBusqueda" />
       </div>
       <!-- Con resultados -->
+      <div class="pokemons__data">
+        <data-found />
+      </div>
     </div>
 
   </div>
@@ -24,12 +27,14 @@
 import pokeballLoading from '@/components/pokeball-loading.vue';
 import noDataFound from '@/components/no-data-found.vue';
 import buscador from '@/components/buscador.vue';
+import dataFound from '@/components/data-found.vue';
 
 export default {
   name: 'pokemons',
   components: {
     'pokeball-loading': pokeballLoading,
     'no-data-found': noDataFound,
+    'data-found': dataFound,
     buscador,
   },
 
@@ -44,7 +49,7 @@ export default {
     textoBusqued() {
       clearTimeout( this.timeHandler );
       this.timeHandler = setTimeout(() => {
-        console.log('Ejecutar petición', this.textoBusqued);
+        // console.log('Ejecutar petición', this.textoBusqued);
       }, 300);
       // console.log('NYEIV: ', this.textoBusqued);
     }
@@ -84,10 +89,17 @@ export default {
   }
 
   .pokemons__contenedor {
+    width: 52vw;
+    max-width: 690px;
+    // position: relative;
 
     .contenedor-buscador {
-      width: 570px;
+      width: 100%;
       height: fit-content;
+    }
+
+    .pokemons__data {
+      margin-top: 10px;
     }
 
   }
