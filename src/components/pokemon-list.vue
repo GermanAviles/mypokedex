@@ -31,20 +31,20 @@ export default {
     }
   },
   watch: {
-    pokemonsList() {
-      console.log('DATA; ', this.pokemonsList);
-    }
+    // pokemonsList() {
+    //   console.log('DATA; ', this.pokemonsList);
+    // }
   },
   methods: {
     viewDetail( pokemon ) {
-      console.log('viewDetail: ', pokemon);
+      this.$emit('viewPokemon', pokemon);
     },
 
     addRemoveFavorite( event, pokemon ) {
       event.stopPropagation();
       event.srcElement.parentElement.blur();
-      const newPokemon = { ...pokemon, favorite: !pokemon.favorite };
-      this.$eventBus.$emit('addRemoveFavorite', { newPokemon, add: newPokemon.favorite });
+      const result = { name: pokemon.name, add: !pokemon.favorite };
+      this.$eventBus.$emit('addRemoveFavorite', result);
     }
   },
 }

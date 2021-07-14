@@ -28,6 +28,7 @@ import pokeballLoading from '@/components/pokeball-loading.vue';
 import noDataFound from '@/components/no-data-found.vue';
 import buscador from '@/components/buscador.vue';
 import dataFound from '@/components/data-found.vue';
+import pokemonService from '../services/pokemons';
 
 export default {
   name: 'pokemons',
@@ -42,11 +43,7 @@ export default {
     timeHandler: null,
     cargando: true,
     textoBusqued: null,
-    listadoPokemons: [
-      {"name":"bulbasaur", "url":"https://pokeapi.co/api/v2/pokemon/1/"},
-      {"name":"ivysaur",   "url":"https://pokeapi.co/api/v2/pokemon/2/"},
-      {"name":"venusaur",  "url":"https://pokeapi.co/api/v2/pokemon/3/"},
-    ]
+    listadoPokemons: []
   }),
 
   watch: {
@@ -60,16 +57,23 @@ export default {
   },
 
   mounted() {
-    setTimeout( () => {
-      this.cargando = false;
-      // TODO: Realizar petición para obtener lista de pokemons
-      this.listadoPokemons = this.listadoPokemons.map((pokemon) => ({ ...pokemon, favorite: false  }))
-      this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
-      // document.getElementById('pokemons__loading').classList.add('animated');
-    }, 1000);
+    this.cargarPokemones();
   },
 
   methods: {
+    async cargarPokemones() {
+      this.cargando = true;
+      try {
+        const response = await pokemonService.getPokemons();
+        this.listadoPokemons = response.data.results.map((pokemon) => ({ ...pokemon, favorite: false  }));
+        this.cargando = false;
+        this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
+      } catch (error) {
+        console.error(error);
+        this.cargando = false;
+      }
+    },
+
     limpiarBusqueda() {
       // this.textoBusqued = null;
       this.$router.back();
