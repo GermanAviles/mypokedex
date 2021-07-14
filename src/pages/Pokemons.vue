@@ -114,7 +114,9 @@ export default {
   .pokemons__contenedor {
     width: 52vw;
     max-width: 690px;
-    // position: relative;
+    @media screen and (max-width: 800px){
+      width: 93vw;
+    }
 
     .contenedor-buscador {
       width: 100%;

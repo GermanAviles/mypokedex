@@ -84,6 +84,7 @@ export default {
         font-size: 1.1em;
         max-width: 570px;
         line-height: 26px;
+        padding: 0 10px;
       }
     }
 

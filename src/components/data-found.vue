@@ -60,7 +60,6 @@ components: {
     this.$eventBus.$on('changed-pokemos', (newPokemons) => {
       this.pokemonsList = newPokemons;
       this.pokemons = this.pokemonsList;
-      console.log('new', newPokemons);
     });
 
     this.$eventBus.$on('addRemoveFavorite', (resultado) => {
@@ -155,7 +154,7 @@ components: {
 
 .button {
   font-size: 1em;
-  min-width: 275px;
+  width: 275px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,6 +164,9 @@ components: {
   padding: 11px 20px;
   border-radius: 60px;
   transition: background-color .3s ease-out;
+  @media screen and (max-width: 689px) {
+    width: fit-content;
+  }
   span {
     margin-right: 8px;
   }
@@ -194,11 +196,30 @@ components: {
 
   .modal__body-modal{
     width: 50vw;
-    height: 78vh;
+    height: 80vh;
     background-color: var(--white);
     border: none;
     border-radius: 9px;
     position: relative;
+
+    @media screen and (max-width: 880px) and (max-height: 750px){
+      width: 90vw;
+      height: 70vh;
+      padding: 0 0 20px 0;
+    }
+
+    @media screen and (max-width: 341px) {
+      width: 90vw;
+      height: 82vh;
+      padding: 0 0 20px 0;
+    }
+
+    @media screen and (max-width: 290px) {
+      width: 90vw;
+      height: 90vh;
+      padding: 0 0 20px 0;
+    }
+
 
     .close-modal{
       z-index: 50;
