@@ -1,5 +1,5 @@
 <template>
-  <div class="data-found">
+  <div v-if="this.pokemons.length" class="data-found">
     <!-- Lista de pokemons -->
     <pokemon-list :pokemonsList="pokemons" @viewPokemon="verPokemon" />
     <!-- Controles del tab -->

@@ -117,7 +117,7 @@ export default {
       let filePokemon = 'Nombre -- Peso -- Alto -- Tipos\n'
       filePokemon += `${ this.pokemon.name } -- ${ this.pokemon.weight } -- ${ this.pokemon.height } -- ${this.pokemon.types.join(',')}\n`
       const fileContents = filePokemon;
-      const fileName = "Tu_Pokemon.txt";
+      const fileName = `info_${this.pokemon.name}_pokemon.txt`;
 
       const pp = document.createElement('a');
       pp.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContents));
