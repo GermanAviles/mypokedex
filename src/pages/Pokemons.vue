@@ -42,7 +42,11 @@ export default {
     timeHandler: null,
     cargando: true,
     textoBusqued: null,
-    listadoPokemons: []
+    listadoPokemons: [
+      {"name":"bulbasaur", "url":"https://pokeapi.co/api/v2/pokemon/1/"},
+      {"name":"ivysaur",   "url":"https://pokeapi.co/api/v2/pokemon/2/"},
+      {"name":"venusaur",  "url":"https://pokeapi.co/api/v2/pokemon/3/"},
+    ]
   }),
 
   watch: {
@@ -58,6 +62,9 @@ export default {
   mounted() {
     setTimeout( () => {
       this.cargando = false;
+      // TODO: Realizar petición para obtener lista de pokemons
+      this.listadoPokemons = this.listadoPokemons.map((pokemon) => ({ ...pokemon, favorite: false  }))
+      this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
       // document.getElementById('pokemons__loading').classList.add('animated');
     }, 1000);
   },
@@ -67,7 +74,11 @@ export default {
       // this.textoBusqued = null;
       this.$router.back();
     }
-  }
+  },
+
+  beforeDestroy() {
+    this.$eventBus.$off('addRemoveFavorite');
+  },
 }
 </script>
 
