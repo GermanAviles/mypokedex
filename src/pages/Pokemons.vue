@@ -11,11 +11,11 @@
         <buscador v-model="textoBusqued"/>
       </div>
       <!-- Sin resultados -->
-      <div v-show="!searching && this.textoBusqued" class="pokemons__no-data-found">
+      <div v-show="!mostrarData && this.textoBusqued" class="pokemons__no-data-found">
         <no-data-found @goback="limpiarBusqueda" />
       </div>
       <!-- Con resultados -->
-      <div class="pokemons__data">
+      <div v-show="mostrarData" class="pokemons__data">
         <data-found />
       </div>
     </div>
@@ -44,7 +44,7 @@ export default {
     cargando: true,
     textoBusqued: null,
     listadoPokemons: [],
-    searching: true,
+    mostrarData: true
   }),
 
   watch: {
@@ -53,28 +53,14 @@ export default {
       clearTimeout( this.timeHandler );
       this.timeHandler = setTimeout(() => {
         if (this.textoBusqued && this.textoBusqued.length) {
-          // const patt = new RegExp(/^[A-Za-z0-9\s]+$/g);
-          // const testString = patt.test( this.textoBusqued );
-          // if (!testString) {
-          //   // this.search = string;
-          //   let out = ''
-          //   const filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890'// Caracteres validos
-          //   for (let i=0; i< this.textoBusqued.length; i++){
-          //     if (filtro.includes(this.textoBusqued.charAt(i))){
-          //       out += this.textoBusqued.charAt(i)
-          //     }
-          //   }
-          //   console.log(out);
-          // }
           const nuevoListado = this.listadoPokemons.filter( (pokemon) => pokemon.name === this.textoBusqued);
-          this.searching = nuevoListado.length ? true : false;
+          this.mostrarData = nuevoListado.length ? true : false;
           this.$eventBus.$emit('changed-pokemos', nuevoListado);
         } else {
+          this.mostrarData = true;
           this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
-          this.searching = true;
         }
       }, 300);
-      // console.log('NYEIV: ', this.textoBusqued);
     }
   },
 

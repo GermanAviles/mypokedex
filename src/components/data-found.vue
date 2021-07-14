@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.pokemons.length" class="data-found">
+  <div class="data-found">
     <!-- Lista de pokemons -->
     <pokemon-list :pokemonsList="pokemons" @viewPokemon="verPokemon" />
     <!-- Controles del tab -->
@@ -60,6 +60,7 @@ components: {
     this.$eventBus.$on('changed-pokemos', (newPokemons) => {
       this.pokemonsList = newPokemons;
       this.pokemons = this.pokemonsList;
+      console.log('new', newPokemons);
     });
 
     this.$eventBus.$on('addRemoveFavorite', (resultado) => {
