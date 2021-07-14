@@ -1,6 +1,8 @@
 <template>
   <div class="data-found">
-    <pokemon-list :pokemonsList="pokemonsList" />
+    <!-- Lista de pokemons -->
+    <pokemon-list :pokemonsList="pokemons" />
+    <!-- Controles del tab -->
     <div class="data-found__controles">
       <button class="button active" id="get-all" type="button" @click="cambioTab">
         <span class="material-icons-outlined">format_list_bulleted</span>
@@ -30,27 +32,22 @@ components: {
 
   data: () => ({
     tabAnterior: 'get-all',
-    pokemonsList: [
-      {"name":"bulbasaur", "url":"https://pokeapi.co/api/v2/pokemon/1/"},
-      {"name":"ivysaur","url":"https://pokeapi.co/api/v2/pokemon/2/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-      {"name":"venusaur","url":"https://pokeapi.co/api/v2/pokemon/3/"},
-    ]
+    pokemons: [],
+    favoritesPokemons: [],
+    pokemonsList: []
   }),
 
   mounted(){
     // https://pokeapi.co/api/v2/pokemon
     // https://pokeapi.co/api/v2/pokemon/name
-    this.$eventBus.$on('change-name', this.changeName);
+    this.$eventBus.$on('changed-pokemos', (newPokemons) => {
+      this.pokemonsList = newPokemons;
+      this.pokemons = this.pokemonsList;
+    });
+
+    this.$eventBus.$on('addRemoveFavorite', (resultado) => {
+      this.actualizarListaFavoritos(resultado.newPokemon, resultado.add);
+    });
   },
 
   methods: {
@@ -59,10 +56,36 @@ components: {
       document.getElementById(this.tabAnterior).classList.remove('active');
       document.getElementById(idActual).classList.add('active');
       this.tabAnterior = idActual;
+      this.llenarListaPokemons( idActual );
+    },
+
+    llenarListaPokemons( tipo ){
+      this.pokemons = tipo === 'get-all' ? this.pokemonsList : this.favoritesPokemons;
+    },
+
+    actualizarListaFavoritos( pokemon, add ) {
+      if (add){
+        this.favoritesPokemons.push( pokemon );
+      } else {
+        this.favoritesPokemons = this.favoritesPokemons.filter( (pok) => pok.name !== pokemon.name);
+      }
+      this.actualizarListaPokemon( pokemon.name, add );
+    },
+
+    actualizarListaPokemon( name, add ) {
+      const pokemonIndex = this.pokemonsList.findIndex( (pokemon) => pokemon.name === name);
+
+      if (pokemonIndex > -1) {
+        this.pokemonsList[ pokemonIndex ].favorite = add;
+        this.pokemons[ pokemonIndex ].favorite = add;
+      }
+
     }
+
   },
   beforeDestroy() {
-    this.$eventBus.$off('change-name');
+    this.$eventBus.$off('changed-pokemos');
+    this.$eventBus.$off('addRemoveFavorite');
   },
 }
 </script>
