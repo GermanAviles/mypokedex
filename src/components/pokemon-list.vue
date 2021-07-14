@@ -1,10 +1,20 @@
 <template>
   <div class="pokemons-list">
     <ul class="pokemons-list__ul">
-      <li v-for="(pokemon, index) of pokemonsList" :key="index" class="pokemons-list-ul-li">
+      <li
+        class="pokemons-list-ul-li"
+        v-for="(pokemon, index) of pokemonsList"
+        :key="index"
+        @click="viewDetail( pokemon )"
+      >
         {{ pokemon.name }}
-        <span class="circle">
-          <span class="input-icon material-icons-outlined">start</span>
+        <span class="circle" @click="addRemoveFavorite( $event, pokemon )">
+          <span
+            :class="pokemon.favorite ? 'favorite' : ''"
+            class="input-icon material-icons-outlined"
+          >
+          start
+          </span>
         </span>
       </li>
     </ul>
@@ -20,7 +30,22 @@ export default {
       default: []
     }
   },
+  watch: {
+    pokemonsList() {
+      console.log('DATA; ', this.pokemonsList);
+    }
+  },
   methods: {
+    viewDetail( pokemon ) {
+      console.log('viewDetail: ', pokemon);
+    },
+
+    addRemoveFavorite( event, pokemon ) {
+      event.stopPropagation();
+      event.srcElement.parentElement.blur();
+      const newPokemon = { ...pokemon, favorite: !pokemon.favorite };
+      this.$eventBus.$emit('addRemoveFavorite', { newPokemon, add: newPokemon.favorite });
+    }
   },
 }
 </script>
@@ -63,17 +88,26 @@ export default {
         border-radius: 50%;
         padding: 5px;
         span {
+          width: 24px;
           color:var(--secondary);
         }
-      }
-
-      .circle:hover {
-        cursor: pointer;
-        span {
-          cursor: pointer;
+        .favorite {
+          color: var(--gold);
         }
       }
     }
+
+  }
+}
+
+.pokemons-list-ul-li:hover {
+  cursor: pointer;
+}
+
+.circle:hover {
+  cursor: pointer;
+  span {
+    cursor: pointer;
   }
 }
 
@@ -88,10 +122,6 @@ export default {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 4px var(--input-color);
 	background-color: var(--cicle-background);
-}
-
-.favorite {
-  color: var(--gold);
 }
 
 </style>
