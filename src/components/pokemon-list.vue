@@ -3,8 +3,8 @@
     <ul class="pokemons-list__ul">
       <li
         class="pokemons-list-ul-li"
-        v-for="(pokemon, index) of pokemonsList"
-        :key="index"
+        v-for="(pokemon) of listaPokemons"
+        :key="pokemon.name"
         @click="viewDetail( pokemon )"
       >
         {{ pokemon.name }}
@@ -30,11 +30,12 @@ export default {
       default: []
     }
   },
-  watch: {
-    // pokemonsList() {
-    //   console.log('DATA; ', this.pokemonsList);
-    // }
+  computed: {
+    listaPokemons() {
+      return this.pokemonsList;
+    }
   },
+  watch: {},
   methods: {
     viewDetail( pokemon ) {
       this.$emit('viewPokemon', pokemon);
