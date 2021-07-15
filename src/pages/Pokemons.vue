@@ -10,11 +10,8 @@
       <div class="contenedor-buscador">
         <buscador v-model="textoBusqued"/>
       </div>
-      <!-- Sin resultados -->
-      <div v-show="!mostrarData && this.textoBusqued" class="pokemons__no-data-found">
-        <no-data-found @goback="limpiarBusqueda" />
-      </div>
-      <!-- Con resultados -->
+
+      <!-- Contenido -->
       <div v-show="mostrarData" class="pokemons__data">
         <data-found />
       </div>
@@ -25,7 +22,6 @@
 
 <script>
 import pokeballLoading from '@/components/pokeball-loading.vue';
-import noDataFound from '@/components/no-data-found.vue';
 import buscador from '@/components/buscador.vue';
 import dataFound from '@/components/data-found.vue';
 import pokemonService from '../services/pokemons';
@@ -34,7 +30,6 @@ export default {
   name: 'pokemons',
   components: {
     'pokeball-loading': pokeballLoading,
-    'no-data-found': noDataFound,
     'data-found': dataFound,
     buscador,
   },
@@ -52,14 +47,7 @@ export default {
       this.searching = true;
       clearTimeout( this.timeHandler );
       this.timeHandler = setTimeout(() => {
-        if (this.textoBusqued && this.textoBusqued.length) {
-          const nuevoListado = this.listadoPokemons.filter( (pokemon) => pokemon.name.match( this.textoBusqued ) );
-          this.mostrarData = nuevoListado.length ? true : false;
-          this.$eventBus.$emit('changed-pokemos', nuevoListado);
-        } else {
-          this.mostrarData = true;
-          this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
-        }
+        this.$eventBus.$emit('buscarPokemon', this.textoBusqued);
       }, 300);
     }
   },
@@ -79,6 +67,8 @@ export default {
       } catch (error) {
         console.error(error);
         this.cargando = false;
+        this.listadoPokemons = [];
+        this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
       }
     },
 

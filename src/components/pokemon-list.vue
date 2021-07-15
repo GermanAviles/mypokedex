@@ -64,6 +64,7 @@ export default {
   .pokemons-list__ul {
     width: 100%;
     max-height: 64vh;
+    min-height: 64vh;
     position: relative;
     padding: 5px 0 5px 5px;
     margin: 0;

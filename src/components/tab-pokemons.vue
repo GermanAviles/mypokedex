@@ -6,7 +6,14 @@
         <pokemon-list :pokemonsList="pokemonsList" @viewPokemon="verPokemon" />
       </div>
       <div id="tab__content-2" class="content">
-        <pokemon-list :pokemonsList="favoritesPokemons" @viewPokemon="verPokemon" />
+        <div class="content-dont-favorite" v-if="!favoritesPokemons.length">
+          ¡Oh! You don't have favorite pokemons
+        </div>
+        <pokemon-list
+          v-show="favoritesPokemons.length"
+          :pokemonsList="favoritesPokemons"
+          @viewPokemon="verPokemon"
+        />
       </div>
     </div>
 
@@ -36,12 +43,12 @@ components: {
   },
 
   props: {
+    pokemonsList: [],
   },
 
   data: () => ({
-    tabAnterior: 'get-all',
     favoritesPokemons: [],
-    pokemonsList: [],
+    tabAnterior: 'get-all',
     tabs: {
       'get-all': 'tab__content-1',
       'get-favorites': 'tab__content-2'
@@ -49,9 +56,11 @@ components: {
   }),
 
   mounted(){
-    this.$eventBus.$on('changed-pokemos', (newPokemons) => {
-      this.pokemonsList = newPokemons;
-    });
+    this.$emit('tabChanged', 'get-all');
+
+    this.$eventBus.$on('changedListFavorite', (newList) => {
+      this.favoritesPokemons = newList;
+    })
 
     this.$eventBus.$on('addRemoveFavorite', (resultado) => {
       this.actualizarListaPokemon(resultado.name, resultado.add);
@@ -67,6 +76,7 @@ components: {
       document.getElementById(idActual).classList.add('active');
 
       this.tabAnterior = idActual;
+      this.$emit('tabChanged', idActual);
       this.showTabSelected( idActual );
     },
 
@@ -97,6 +107,8 @@ components: {
         const indexFav = this.favoritesPokemons.findIndex( (pokmon) => pokmon.name === pokemon.name);
         this.favoritesPokemons.splice(indexFav, 1);
       }
+
+      this.$emit('updateFavoriteList', this.favoritesPokemons);
     },
 
     verPokemon( pokemon ) {
@@ -104,8 +116,8 @@ components: {
     },
 
   },
+
   beforeDestroy() {
-    this.$eventBus.$off('changed-pokemos');
     this.$eventBus.$off('addRemoveFavorite');
   },
 }
@@ -120,6 +132,14 @@ components: {
 
     .content {
       display: none;
+      .content-dont-favorite {
+        text-align: center;
+        font-size: 2em;
+        height: 64vh;
+        padding: 10px;
+        color: var(--background-modal);
+        font-weight: 600;
+      }
     }
 
     #tab__content-1.show-tab {
