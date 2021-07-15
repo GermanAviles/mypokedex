@@ -93,27 +93,27 @@ components: {
 
   .modal__body-modal{
     width: 50vw;
-    height: 80vh;
+    height: calc( 85vh - 90px );
     background-color: var(--white);
     border: none;
     border-radius: 9px;
     position: relative;
 
-    @media screen and (max-width: 880px) and (max-height: 750px){
+    @media screen and (max-width: 880px){
       width: 90vw;
-      height: 70vh;
+      height: calc( 83vh - 90px );
       padding: 0 0 20px 0;
     }
 
     @media screen and (max-width: 341px) {
       width: 90vw;
-      height: 82vh;
+      height: calc( 83vh - 90px );
       padding: 0 0 20px 0;
     }
 
-    @media screen and (max-width: 290px) {
+    @media screen and (max-width: 302px) {
       width: 90vw;
-      height: 90vh;
+      height: calc( 92vh - 90px );
       padding: 0 0 20px 0;
     }
 

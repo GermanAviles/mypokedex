@@ -136,6 +136,7 @@ components: {
     flex-flow: row wrap;
     justify-content: center;
     height: 73px;
+    min-height: fit-content;
     padding: 14px 0;
     background: var(--white);
     box-shadow: 0 -4px 8px 0 rgba(21,21,21,.2);
@@ -143,8 +144,16 @@ components: {
     right: 0;
     bottom: 0;
 
+    @media screen and (max-width: 235px) {
+      height: 135px;
+    }
+
     button {
       margin:  0px 10px;
+      @media screen and (max-width: 270px) {
+        margin: 5px 2px;
+        height: fit-content;
+      }
     }
   }
 

@@ -131,13 +131,9 @@ export default {
 
 @keyframes easeout {
   0% {
-    // display: block;
     transform: translateX(0%);
   }
   100% {
-    // display: none;
-    // position: absolute;
-    // top: -100px;
     transform: translateX(-100%);
   }
 }
