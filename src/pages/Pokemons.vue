@@ -53,7 +53,7 @@ export default {
       clearTimeout( this.timeHandler );
       this.timeHandler = setTimeout(() => {
         if (this.textoBusqued && this.textoBusqued.length) {
-          const nuevoListado = this.listadoPokemons.filter( (pokemon) => pokemon.name === this.textoBusqued);
+          const nuevoListado = this.listadoPokemons.filter( (pokemon) => pokemon.name.match( this.textoBusqued ) );
           this.mostrarData = nuevoListado.length ? true : false;
           this.$eventBus.$emit('changed-pokemos', nuevoListado);
         } else {
@@ -83,7 +83,6 @@ export default {
     },
 
     limpiarBusqueda() {
-      // this.textoBusqued = null;
       this.$router.back();
     }
   },
