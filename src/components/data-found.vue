@@ -128,6 +128,7 @@ components: {
           filteredFavorites = this.filtrarPokemons( pokemons, text );
           this.conResultados = filteredFavorites.length ? true : false;
         } else {
+          filteredFavorites = this.filtrarListPokToFav();
           this.conResultados = true;
         }
 
@@ -141,6 +142,14 @@ components: {
     */
     filtrarPokemons( listPokemons, text ) {
       return listPokemons.filter( (pokemon) => pokemon.name.match( text ) );
+    },
+
+    /**
+     * @method filtrarListPokToFav()
+     * @description Metodo encargado de filtrar los pokemons para obtener los favoritos
+    */
+    filtrarListPokToFav() {
+      return this.pokemonsList.filter( (pokemon) => pokemon.favorite === true );
     }
 
   },

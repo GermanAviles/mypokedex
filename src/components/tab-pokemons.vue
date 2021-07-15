@@ -119,6 +119,7 @@ components: {
 
   beforeDestroy() {
     this.$eventBus.$off('addRemoveFavorite');
+    this.$eventBus.$off('changedListFavorite');
   },
 }
 </script>
