@@ -69,6 +69,12 @@ components: {
   },
 
   methods: {
+    /**
+      * @method cambioTab()
+      * @param event Evento click recibido al activarse del boton del tab
+      * @description Metodo encargado de obtener el id del tab activado y agregar
+      * clases correspondientes
+    */
     cambioTab( event ) {
       const idActual = event.srcElement.id || event.srcElement.parentNode.id;
 
@@ -79,7 +85,11 @@ components: {
       this.$emit('tabChanged', idActual);
       this.showTabSelected( idActual );
     },
-
+    /**
+      * @method cambioTab()
+      * @param idControl id del tab actual en el que se encuentra el usuario
+      * @description Metodo encargado mostrar el tab correspondiente al id
+    */
     showTabSelected( idControl ) {
       for( let keyTab in this.tabs ){
         document.getElementById( this.tabs[keyTab] ).classList.remove('show-tab');
@@ -89,6 +99,12 @@ components: {
       }
     },
 
+    /**
+      * @method actualizarListaPokemon()
+      * @param name nombre del pokemon que deseamos cambiarle el estado de favorito
+      * @param add bandera que permite determinar si se desea agregar o eliminar de favoritos
+      * @description Metodo encargado de actualizar un elemento de la lista
+    */
     actualizarListaPokemon( name, add ) {
       const pokemonIndex = this.pokemonsList.findIndex( (pokemon) => pokemon.name === name);
 
@@ -98,6 +114,12 @@ components: {
       }
     },
 
+    /**
+      * @method actualizarListaPokemon()
+      * @param pokemon nombre del pokemon que deseamos agregar o eliminar de favoritos
+      * @param add bandera que permite determinar si se desea agregar o eliminar de favoritos
+      * @description Metodo encargado de actualizar la lista de favoritos
+    */
     actualizarListaFavoritos( pokemon, add ) {
 
       if (add){
@@ -111,6 +133,11 @@ components: {
       this.$emit('updateFavoriteList', this.favoritesPokemons);
     },
 
+    /**
+      * @method verPokemon()
+      * @param pokemon nombre del pokemon que deseamos mostrar en el tab
+      * @description Metodo encargado de emitir que pokemon deseamos ver detalladamente
+    */
     verPokemon( pokemon ) {
       this.$emit('openModalPokemon', pokemon)
     },

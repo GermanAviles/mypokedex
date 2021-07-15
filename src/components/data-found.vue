@@ -3,7 +3,7 @@
 
     <!-- Sin resultados de la busqueda -->
     <div v-if="!conResultados" class="pokemons__no-data-found">
-      <no-data-found />
+      <no-data-found @goback="goBack" />
     </div>
 
     <!-- TABS -->
@@ -150,6 +150,10 @@ components: {
     */
     filtrarListPokToFav() {
       return this.pokemonsList.filter( (pokemon) => pokemon.favorite === true );
+    },
+
+    goBack() {
+      this.$router.back();
     }
 
   },

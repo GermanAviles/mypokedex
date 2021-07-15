@@ -57,6 +57,10 @@ export default {
   },
 
   methods: {
+    /**
+     * @method cargarPokemones()
+     * @description Metodo encargado de consumir endpoint de pokemons para la lista
+    */
     async cargarPokemones() {
       this.cargando = true;
       try {
@@ -71,10 +75,6 @@ export default {
         this.$eventBus.$emit('changed-pokemos', this.listadoPokemons);
       }
     },
-
-    limpiarBusqueda() {
-      this.$router.back();
-    }
   },
 
   beforeDestroy() {

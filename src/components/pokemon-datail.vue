@@ -80,6 +80,10 @@ export default {
   },
 
   methods: {
+    /**
+     * @method cargarInfoPokemon()
+     * @description Metodo encargado de consumir endpoint del detalle de un pokemon
+    */
     async cargarInfoPokemon() {
       try {
         const response = await pokemonService.detailPokemon( this.nombrePokemon );
@@ -95,12 +99,20 @@ export default {
         this.cargando = false;
       }
     },
-
+    /**
+     * @method sharePokemon()
+     * @description Metodo encargado de compartir información de un pokemon
+    */
     sharePokemon(event) {
       this.copyInfo(event);
       this.descargarFile();
     },
 
+    /**
+     * @method copyInfo()
+     * @param event Evento click recibido al activarse del boton
+     * @description Metodo encargado de copiar la información en el portapapeles
+    */
     copyInfo(event) {
       const clipboardData =
       event.clipboardData ||
@@ -113,6 +125,10 @@ export default {
       this.$emit('copied', true);
     },
 
+    /**
+     * @method descargarFile()
+     * @description Metodo encargado de descargar la información del pokemon en un textFile
+    */
     descargarFile() {
       let filePokemon = 'Nombre -- Peso -- Alto -- Tipos\n'
       filePokemon += `${ this.pokemon.name } -- ${ this.pokemon.weight } -- ${ this.pokemon.height } -- ${this.pokemon.types.join(',')}\n`
@@ -125,6 +141,12 @@ export default {
       pp.click();
     },
 
+    /**
+      * @method addRemoveFavorite()
+      * @param event Evento click recibido al activarse del boton favorito
+      * @description Metodo encargado de emitir si se agrega o elimina un pokemon a la lsita
+      * de favoritos
+    */
     addRemoveFavorite( event ) {
       event.stopPropagation();
       event.srcElement.parentElement.blur();

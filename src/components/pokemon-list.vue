@@ -37,10 +37,22 @@ export default {
   },
   watch: {},
   methods: {
+    /**
+      * @method viewDetail()
+      * @param pokemon pokemon que deseamos ver su detalle
+      * @description Metodo encargado de emitir que pokemon deseamos ver detalladamente
+    */
     viewDetail( pokemon ) {
       this.$emit('viewPokemon', pokemon);
     },
 
+    /**
+      * @method addRemoveFavorite()
+      * @param event Evento click recibido al activarse del boton favorito
+      * @param pokemon pokemon que deseamos agregar o eliminar a la lista de favoritos
+      * @description Metodo encargado de emitir si se agrega o elimina un pokemon a la lsita
+      * de favoritos
+    */
     addRemoveFavorite( event, pokemon ) {
       event.stopPropagation();
       event.srcElement.parentElement.blur();
