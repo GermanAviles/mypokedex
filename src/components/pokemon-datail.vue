@@ -140,6 +140,8 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-flow: column nowrap;
 
   .pokemon-detail__loading {
     z-index: 40;
@@ -154,10 +156,12 @@ export default {
 
   .pokemon-detail__header {
     position: relative;
-    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-basis: 40%;
+    flex-shrink: 3;
+    flex-grow: 1;
 
     .header-background {
       width: 100%;
@@ -177,6 +181,9 @@ export default {
 
   .pokemon-detail__informacion {
     padding: 15px 25px;
+    flex-basis: 40%;
+    flex-shrink: 2;
+    flex-grow: 2;
 
     .informacion-data {
       text-align: start;
@@ -192,11 +199,21 @@ export default {
   }
 
   .pokemon-detail__controles {
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-content: center;
-    padding: 0 25px;
+    padding: 10px 25px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: 10%;
+
+    @media screen and (max-width: 310px) {
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: center;
+    }
 
     button[type="button"] {
       // width: 135px;
@@ -206,6 +223,9 @@ export default {
       border: none;
       padding: 11px 20px;
       border-radius: 60px;
+      @media screen and (max-width: 310px) {
+        margin-bottom: 10px;
+      }
     }
 
     button[type="button"]:hover {

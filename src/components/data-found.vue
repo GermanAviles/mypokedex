@@ -173,7 +173,7 @@ components: {
 
   .modal__body-modal{
     width: 50vw;
-    height: calc( 85vh - 90px );
+    height: 90%;
     background-color: var(--white);
     border: none;
     border-radius: 9px;
@@ -181,19 +181,16 @@ components: {
 
     @media screen and (max-width: 880px){
       width: 90vw;
-      height: calc( 83vh - 90px );
       padding: 0 0 20px 0;
     }
 
     @media screen and (max-width: 341px) {
       width: 90vw;
-      height: calc( 83vh - 90px );
       padding: 0 0 20px 0;
     }
 
     @media screen and (max-width: 302px) {
       width: 90vw;
-      height: calc( 92vh - 90px );
       padding: 0 0 20px 0;
     }
 
