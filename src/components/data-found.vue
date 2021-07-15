@@ -1,19 +1,8 @@
 <template>
   <div class="data-found">
-    <!-- Lista de pokemons -->
-    <pokemon-list :pokemonsList="pokemons" @viewPokemon="verPokemon" />
-    <!-- Controles del tab -->
-    <div class="data-found__controles">
-      <button class="button active" id="get-all" type="button" @click="cambioTab">
-        <span class="material-icons-outlined">format_list_bulleted</span>
-        All
-      </button>
+    <!-- TABS -->
+    <tab-pokemons @openModalPokemon="verPokemon" />
 
-      <button class="button" id="get-favorites" type="button" @click="cambioTab">
-        <span class="material-icons-outlined">star</span>
-        Favorites
-      </button>
-    </div>
     <!-- Modal perfil pokemon -->
     <div id="modal-detail" class="modal">
       <div class="modal__body-modal">
@@ -32,7 +21,7 @@
 </template>
 
 <script>
-import pokemonList from './pokemon-list.vue';
+import tabPokemons from './tab-pokemons.vue';
 import pokemonDetail from './pokemon-datail.vue';
 import toast from './toast.vue';
 
@@ -40,7 +29,7 @@ export default {
   name: 'dataFound',
 
 components: {
-    'pokemon-list': pokemonList,
+    'tab-pokemons': tabPokemons,
     'pokemon-detail': pokemonDetail,
     toast
   },
@@ -57,50 +46,9 @@ components: {
   }),
 
   mounted(){
-    this.$eventBus.$on('changed-pokemos', (newPokemons) => {
-      this.pokemonsList = newPokemons;
-      this.pokemons = this.pokemonsList;
-    });
-
-    this.$eventBus.$on('addRemoveFavorite', (resultado) => {
-      this.actualizarListaPokemon(resultado.name, resultado.add);
-    });
-
   },
 
   methods: {
-    cambioTab( event ) {
-      const idActual = event.srcElement.id || event.srcElement.parentNode.id;
-      document.getElementById(this.tabAnterior).classList.remove('active');
-      document.getElementById(idActual).classList.add('active');
-      this.tabAnterior = idActual;
-      this.llenarListaPokemons( idActual );
-    },
-
-    llenarListaPokemons( tipo ){
-      this.pokemons = tipo === 'get-all' ? this.pokemonsList : this.favoritesPokemons;
-    },
-
-    actualizarListaFavoritos( pokemon, add ) {
-      if (add){
-        this.favoritesPokemons.push( pokemon );
-      } else {
-        this.favoritesPokemons = this.favoritesPokemons.filter( (pok) => pok.name !== pokemon.name);
-      }
-    },
-
-    actualizarListaPokemon( name, add ) {
-      const pokemonIndex = this.pokemonsList.findIndex( (pokemon) => pokemon.name === name);
-      let pokemon = null;
-
-      if (pokemonIndex > -1) {
-        pokemon = this.pokemonsList[ pokemonIndex ];
-        this.pokemonsList[ pokemonIndex ].favorite = add;
-        this.pokemons[ pokemonIndex ].favorite = add;
-        this.actualizarListaFavoritos( pokemon, add);
-      }
-    },
-
     verPokemon( pokemon ) {
       this.pokemonSeleccionado = pokemon;
       document.getElementById('modal-detail').classList.toggle('show-modal');
@@ -120,10 +68,6 @@ components: {
     }
 
   },
-  beforeDestroy() {
-    this.$eventBus.$off('changed-pokemos');
-    this.$eventBus.$off('addRemoveFavorite');
-  },
 }
 </script>
 
@@ -132,53 +76,6 @@ components: {
 
 .data-found {
   z-index: 10;
-
-  .data-found__controles {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    height: 73px;
-    padding: 14px 0;
-    background: var(--white);
-    box-shadow: 0 -4px 8px 0 rgba(21,21,21,.2);
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    button {
-      margin:  0px 10px;
-    }
-  }
-}
-
-.button {
-  font-size: 1em;
-  width: 275px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
-  background-color: var(--secondary);
-  border: none;
-  padding: 11px 20px;
-  border-radius: 60px;
-  transition: background-color .3s ease-out;
-  @media screen and (max-width: 689px) {
-    width: fit-content;
-  }
-  span {
-    margin-right: 8px;
-  }
-}
-
-.button:hover {
-  cursor: pointer;
-  // background-color: var(--primary-oscuro);
-}
-
-.active {
-  background-color: var(--primary);
 }
 
 .modal {
